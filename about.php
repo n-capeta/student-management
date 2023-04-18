@@ -2,7 +2,7 @@
 
 
 
-<h2> Hogwarts Student Management </h2>
+<h2> Hogwarts Student Management - About</h2>
 
 
 
