@@ -6,10 +6,12 @@ session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: stuData.php");
+    header("location: welcome.php");
     exit;
 }
  
+// Include config file
+require_once "config/database.php";
  
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -64,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
-                            header("location: stuData.php");
+                            header("location: welcome.php");
                         } else{
                             // Password is not valid, display a generic error message
                             $login_err = "Invalid username or password.";
@@ -89,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
  
     <div class="wrapper">
-        <h2 class = "text-warning">Student Login Portal</h2>
+        <h2 class = "text-warning">Admin Login Portal</h2>
         <p>Please fill in your credentials to login.</p>
 
         <?php 
