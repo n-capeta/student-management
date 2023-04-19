@@ -1,6 +1,6 @@
 <?php include 'inc/header.php'; ?>
 
-<h2 class = "text-warning">Student Data</h2>
+<h2 class = "text-warning">Admin Data</h2>
 
 <?php
 session_start();
