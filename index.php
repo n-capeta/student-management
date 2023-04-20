@@ -10,17 +10,17 @@ require_once "config/database.php";
  
  
 // Define variables and initialize with empty values
-$id = $password = "";
-$id_err = $password_err = $login_err = "";
+$username = $password = "";
+$username_err = $password_err = $login_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Check if id is empty
-    if(empty(trim($_POST["id"]))){
-        $id_err = "Please enter ID.";
+    // Check if username is empty
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
     } else{
-        $id = trim($_POST["id"]);
+        $username = trim($_POST["username"]);
     }
     
     // Check if password is empty
@@ -31,25 +31,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Validate credentials
-    if(empty($id_err) && empty($password_err)){
+    if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, password FROM users WHERE id = ?";
+        $sql = "SELECT username, password FROM students WHERE username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_id);
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
             // Set parameters
-            $param_id = $id;
+            $param_username = $username;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Store result
                 mysqli_stmt_store_result($stmt);
 
-                // Check if id exists, if yes then verify password
+                // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $hashed_password);
+                    mysqli_stmt_bind_result($stmt, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
                         if($password == $hashed_password){
                             // Password is correct, so start a new session
@@ -57,17 +57,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["ID"] = $id;                            
+                            $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
                             header("location: stuData.php");
                         } else{
                             // Password is not valid, display a generic error message
-                            $login_err = "Invalid ID or password." . $hashed_password . $password;
+                            $login_err = "Invalid username or password.";
                         }
                     }
                 } else{
-                    // ID doesn't exist, display a generic error message
+                    // username or password doesn't exist, display a generic error message
                     $login_err = "Invalid ID or password.";
                 }
             } else{
@@ -96,9 +96,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label>ID</label>
-                <input type="text" name="id" class="form-control <?php echo (!empty($id_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $id; ?>">
-                <span class="invalid-feedback"><?php echo $id_err; ?></span>
+                <label>Username</label>
+                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>    
             <div class="form-group">
                 <label>Password</label>
