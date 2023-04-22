@@ -3,15 +3,9 @@
 <h2 class = "text-warning">Student Data</h2>
 
 <?php
-session_start();
-echo $_SESSION["username"];
-?>
+        session_start();
 
-        <?php
-        $query = mysqli_query($link, "select * from students");
-
-        /*$row = mysqli_fetch_array($query);
-        print_r($row);*/
+        $query = mysqli_query($link, "select * from students where username='" . $_SESSION["username"] . "'"   );
 
         
             echo "<table border='1'>
@@ -22,7 +16,7 @@ echo $_SESSION["username"];
             <th>House</th>
             <th>Username</th>
             <th>Password</th>
-            </tr>";
+            </tr>"; 
 
             while($row = mysqli_fetch_array($query))
             {
@@ -37,7 +31,7 @@ echo $_SESSION["username"];
             }
             echo "</table>";
 
-                    ?>
-                    </table>
+?>
+
 
 <?php include 'inc/footer.php'; ?>
