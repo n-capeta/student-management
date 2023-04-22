@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
-        $username_err = "Please enter username.";
+        $username_err = "Please enter Username.";
     } else{
         $username = trim($_POST["username"]);
     }
@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT username, password FROM students WHERE username = ?";
+        $sql = "SELECT username, password FROM teachers WHERE username = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -60,15 +60,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
-                            header("location: stuData.php");
+                            header("location: adminData.php");
                         } else{
                             // Password is not valid, display a generic error message
-                            $login_err = "Invalid username or password.";
+                            $login_err = "Invalid username or password." . $hashed_password . $password;
                         }
                     }
                 } else{
-                    // username or password doesn't exist, display a generic error message
-                    $login_err = "Invalid ID or password.";
+                    // Username doesn't exist, display a generic error message
+                    $login_err = "Invalid username or password.";
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -85,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
  
     <div class="wrapper">
-        <h2 class = "text-warning">Student Login Portal</h2>
+        <h2 class = "text-warning">Admin Login Portal</h2>
         <p>Please fill in your credentials to login.</p>
 
         <?php 
