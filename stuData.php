@@ -1,23 +1,32 @@
 <?php include 'inc/header.php'; ?>
 
-<h2 class = "text-warning">Student Data</h2>
+<h2 class = "text-secondary">Student Data</h2>
 
-<?php
-    session_start();
-
-    $stu_info_query = mysqli_query($link, "select * from students where username='" . $_SESSION["username"] . "'"   );
-        
-        
-        // Setting up table with all student info
-        echo "<table border='1'>
-        <tr>
+<table>
+    <style>
+        table, th, td{
+        border: 1px solid black;
+        padding: 5px;
+        }
+        tr:nth-child(even) {
+        background-color: #D3D3D3;
+        }
+    </style>
+    <h4 class = "text-secondary"> Personal Info </h4>
+    <thead>
+    <tr>
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>House</th>
         <th>Username</th>
-        <th>Password</th>
-        </tr>"; 
+    </tr>
+    </thead>
+    <tbody>
+<?php
+    session_start();
+
+    $stu_info_query = mysqli_query($link, "select * from students where username='" . $_SESSION["username"] . "'"   );        
         // Filling table with student info
         while($studentinfo_table = mysqli_fetch_array($stu_info_query))
          {
@@ -28,12 +37,15 @@
         echo "<td>" . $studentinfo_table['last_name'] . "</td>";
         echo "<td>" . $studentinfo_table['house'] . "</td>";
         echo "<td>" . $studentinfo_table['username'] . "</td>";
-        echo "<td>" . $studentinfo_table['password'] . "</td>";
         echo "</tr>";
         }
         echo "</table>";
         echo "<br>";
+?>
+    </tbody>
+</table>
 
+<?php
         // Making a table with all enrollment data
         // Mostly for error checking
         $enrollment_text = "select course_id, assignment_id, grade from student_enrollment where student_id=" . $id;
@@ -57,6 +69,11 @@
         echo "</table>";
 
         echo "<br>";
+?>
+
+    <h4 class = "text-secondary"> Courses </h4>
+
+<?php
 
         // Gathering course ids to use for another table
         $courseid_text = "select course_id from student_enrollment where student_id=" . $id;
@@ -82,7 +99,11 @@
         }
         echo "</table>";
         echo "<br>";
+?>
 
+    <h4 class = "text-secondary"> Assignments </h4>
+
+<?php
 
         // Gathering assignment ids to use for another table
         $assignid_text = "select assignment_id from student_enrollment where student_id=" . $id;
