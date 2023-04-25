@@ -46,6 +46,7 @@
 </table>
 
 <?php
+/*
         // Making a table with all enrollment data
         // Mostly for error checking
         $enrollment_text = "select course_id, assignment_id, grade from student_enrollment where student_id=" . $id;
@@ -69,6 +70,7 @@
         echo "</table>";
 
         echo "<br>";
+        */
 ?>
 
     <h4 class = "text-secondary"> Courses </h4>
