@@ -15,7 +15,7 @@ $username_err = $password_err = $login_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter Username.";
@@ -63,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             header("location: adminData.php");
                         } else{
                             // Password is not valid, display a generic error message
-                            $login_err = "Invalid username or password." . $hashed_password . $password;
+                            $login_err = "Invalid username or password.";
                         }
                     }
                 } else{
